@@ -44,7 +44,7 @@ const Header = () => {
 
                 {/* Auth Links */}
                 <div>
-                    {authData.isAuth ? (
+                    {authData?.isAuth ? (
                         <>
                             <span className="text-white mr-4">
                                 Welcome, {authData.user.data.user.name}
