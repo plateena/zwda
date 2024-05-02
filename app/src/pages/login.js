@@ -3,17 +3,21 @@ import { useEffect } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { login, logout } from '@/redux/features/auth-slice'
+import { useRouter } from 'next/router'
 
 export default function LoginPage() {
     const dispatch = useDispatch()
     const session = useSession() // Added status for error handling
-    const authData = useSelector((state) => state.authReducer.value)
+    const authData = useSelector((state) => state.value)
+    const router = useRouter()
 
     useEffect(() => {
-        if (session) {
+        if (session.status == 'authenticated') {
             dispatch(login(session))
+            router.push('/')
+            // return <div>Redirecting...</div>
         }
-    }, [session, dispatch])
+    }, [session, dispatch, router])
 
     const handleLogout = async () => {
         try {
@@ -26,9 +30,9 @@ export default function LoginPage() {
 
     return (
         <div>
-            {status === 'loading' && <div>Loading...</div>}{' '}
+            {session.status === 'loading' && <div>Loading...</div>}{' '}
             {/* Handle loading state */}
-            {status === 'error' && (
+            {session.status === 'error' && (
                 <div>Error: Failed to fetch session</div>
             )}{' '}
             {/* Handle error state */}
