@@ -1,6 +1,20 @@
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '@/redux/features/auth-slice'
 
 const Header = () => {
+    const authData = useSelector((state) => state.value)
+    const dispatch = useDispatch()
+    const handleLogout = async () => {
+        try {
+            await signOut({ callbackUrl: '/' })
+            dispatch(logout())
+        } catch (error) {
+            console.error('Failed to sign out:', error)
+        }
+    }
+
     return (
         <header className="bg-gray-800 py-4">
             <div className="container mx-auto flex items-center justify-between">
@@ -30,11 +44,25 @@ const Header = () => {
 
                 {/* Auth Links */}
                 <div>
-                    <Link href="/login">
-                        <span className="text-white hover:text-gray-300">
-                            Login
-                        </span>
-                    </Link>
+                    {authData.isAuth ? (
+                        <>
+                            <span className="text-white mr-4">
+                                Welcome, {authData.user.data.user.name}
+                            </span>
+                            <button
+                                onClick={handleLogout}
+                                className="text-white hover:text-gray-300"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link href="/login">
+                            <span className="text-white hover:text-gray-300">
+                                Login
+                            </span>
+                        </Link>
+                    )}
                     {/* Add more auth links as needed */}
                 </div>
             </div>
