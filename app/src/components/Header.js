@@ -36,9 +36,9 @@ const Header = () => {
                             Home
                         </span>
                     </Link>
-                    <Link href="/about">
+                    <Link href="/admin/users">
                         <span className="text-white hover:text-gray-300">
-                            About
+                            Users
                         </span>
                     </Link>
                     {/* Add more navigation links as needed */}

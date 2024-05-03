@@ -4,7 +4,6 @@ import LoginPage from '../pages/login'
 import { useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-// import '@testing-library/jest-dom'
 
 // Mock next-auth/react, react-redux, and next/router modules
 jest.mock('next-auth/react', () => ({
