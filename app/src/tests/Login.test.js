@@ -1,10 +1,8 @@
 // Import necessary dependencies and setup for testing
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import LoginPage from '../pages/login' // Adjust the import path based on your project structure
-import Header from '../components/Header'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { render, screen } from '@testing-library/react'
+import LoginPage from '../pages/login'
+import { useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from './../redux/features/auth-slice'
 import { useRouter } from 'next/router'
 // import '@testing-library/jest-dom'
 
@@ -60,13 +58,13 @@ describe('LoginPage', () => {
         ).toBeInTheDocument()
     })
 
-    test('redirects to home page after successful authentication', () => {
+    test('redirects to users list page after successful authentication', () => {
         const push = jest.fn()
         useRouter.mockReturnValueOnce({ push })
         useSession.mockReturnValueOnce({ status: 'authenticated' })
 
         render(<LoginPage />)
 
-        expect(push).toHaveBeenCalledWith('/')
+        expect(push).toHaveBeenCalledWith('/admin/users')
     })
 })

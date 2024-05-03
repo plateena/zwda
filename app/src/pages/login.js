@@ -1,21 +1,19 @@
 'use client'
 import { useEffect } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { login, logout } from '@/redux/features/auth-slice'
 import { useRouter } from 'next/router'
 
 export default function LoginPage() {
     const dispatch = useDispatch()
-    const session = useSession() // Added status for error handling
-    const authData = useSelector((state) => state.value)
+    const session = useSession()
     const router = useRouter()
 
     useEffect(() => {
         if (session.status == 'authenticated') {
             dispatch(login(session))
-            router.push('/')
-            // return <div>Redirecting...</div>
+            router.push('/admin/users')
         }
     }, [session, dispatch, router])
 
