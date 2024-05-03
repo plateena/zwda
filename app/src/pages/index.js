@@ -2,27 +2,18 @@ import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { login, logout } from '@/redux/features/auth-slice'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import useAuth from '@/utils/auth'
 
 export default function Home() {
-    const authData = useSelector((state) => state.value)
+    const auth = useAuth()
     const dispatch = useDispatch()
-
-    const handleLogout = async () => {
-        try {
-            await signOut({ callbackUrl: '/' })
-            dispatch(logout())
-        } catch (error) {
-            console.error('Failed to sign out:', error)
-        }
-    }
     return (
         <>
-            {authData.isAuth ? (
-                <button onClick={handleLogout}>Logout</button>
+            {auth.isLoggedIn() ? (
+                <span> Welcome, {auth.getUser()?.name}</span>
             ) : (
                 <Link href="/login">Login</Link>
             )}
-            Hello
         </>
     )
 }

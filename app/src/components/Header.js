@@ -2,9 +2,11 @@ import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/redux/features/auth-slice'
+import useAuth from '@/utils/auth'
 
 const Header = () => {
-    const authData = useSelector((state) => state.value)
+    const auth = useAuth()
+
     const dispatch = useDispatch()
     const handleLogout = async () => {
         try {
@@ -44,10 +46,10 @@ const Header = () => {
 
                 {/* Auth Links */}
                 <div>
-                    {authData?.isAuth ? (
+                    {auth.isLoggedIn() ? (
                         <>
                             <span className="text-white mr-4">
-                                Welcome, {authData.user.data.user.name}
+                                Welcome, {auth.getUser().name}
                             </span>
                             <button
                                 onClick={handleLogout}

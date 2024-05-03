@@ -19,7 +19,7 @@ export const auth = createSlice({
             return {
                 value: {
                     isAuth: true,
-                    user: action.payload,
+                    user: action.payload.data.user,
                     token: action.payload.token,
                 },
             }
