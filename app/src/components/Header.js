@@ -1,23 +1,23 @@
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { logout } from '@/redux/features/auth-slice';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import useAuth from '@/utils/auth';
+import { signOut } from 'next-auth/react'
+import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { logout } from '@/redux/features/auth-slice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import useAuth from '@/utils/auth'
 
 const Header = () => {
-    const auth = useAuth();
-    const dispatch = useDispatch();
+    const auth = useAuth()
+    const dispatch = useDispatch()
 
     const handleLogout = async () => {
         try {
-            await signOut({ callbackUrl: '/login' });
-            dispatch(logout());
+            await signOut({ callbackUrl: '/login' })
+            dispatch(logout())
         } catch (error) {
-            console.error('Failed to sign out:', error);
+            console.error('Failed to sign out:', error)
         }
-    };
+    }
 
     return (
         <header className="bg-gray-800 py-4">
@@ -38,11 +38,13 @@ const Header = () => {
                             Home
                         </span>
                     </Link>
-                    <Link href="/admin/users">
-                        <span className="text-white hover:text-gray-300 cursor-pointer">
-                            Users
-                        </span>
-                    </Link>
+                    {auth.isLoggedIn() ? (
+                        <Link href="/admin/users">
+                            <span className="text-white hover:text-gray-300 cursor-pointer">
+                                Users
+                            </span>
+                        </Link>
+                    ) : null}
                     {/* Add more navigation links as needed */}
                 </nav>
 
@@ -71,7 +73,7 @@ const Header = () => {
                 </div>
             </div>
         </header>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header
