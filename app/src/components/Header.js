@@ -5,8 +5,10 @@ import { logout } from '@/redux/features/auth-slice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '@/utils/auth'
+import { useRouter } from 'next/router'
 
 const Header = () => {
+    const router = useRouter()
     const auth = useAuth()
     const dispatch = useDispatch()
 
@@ -22,7 +24,6 @@ const Header = () => {
     return (
         <header className="bg-gray-800 py-4">
             <div className="container mx-auto flex items-center justify-between">
-                {/* Logo */}
                 <div>
                     <Link href="/">
                         <span className="text-white font-bold text-xl cursor-pointer">
@@ -31,7 +32,6 @@ const Header = () => {
                     </Link>
                 </div>
 
-                {/* Navigation Links */}
                 <nav className="space-x-4">
                     <Link href="/">
                         <span className="text-white hover:text-gray-300 cursor-pointer">
@@ -45,7 +45,6 @@ const Header = () => {
                             </span>
                         </Link>
                     ) : null}
-                    {/* Add more navigation links as needed */}
                 </nav>
 
                 {/* Auth Links */}
@@ -62,14 +61,13 @@ const Header = () => {
                                 <FontAwesomeIcon icon={faSignOutAlt} />
                             </button>
                         </>
-                    ) : (
+                    ) : router.pathname !== '/login' ? (
                         <Link href="/login">
                             <span className="text-white hover:text-gray-300 cursor-pointer">
                                 <FontAwesomeIcon icon={faUser} /> Login
                             </span>
                         </Link>
-                    )}
-                    {/* Add more auth links as needed */}
+                    ) : null}
                 </div>
             </div>
         </header>
