@@ -11,7 +11,7 @@ export default NextAuth({
         }),
     ],
     pages: {
-        signIn: '/login'
+        signIn: '/login',
     },
     callbacks: {
         async signIn({ user, account, profile }) {
@@ -21,12 +21,12 @@ export default NextAuth({
             // store.dispatch(logout());
             return true
         },
-        async session({ session, token, user }) {
+        async session({ session, token }) {
             session.user.id = token.id
             session.accessToken = token.accessToken
             return session
         },
-        async jwt({ token, user, account, profile, isNewUser }) {
+        async jwt({ token, user, account, profile }) {
             if (user) {
                 token.id = user.id
             }
