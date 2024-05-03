@@ -23,11 +23,11 @@ const Header = () => {
 
     return (
         <header className="bg-gray-800 py-4">
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="mx-8 flex items-center justify-between">
                 <div>
                     <Link href="/">
                         <span className="text-white font-bold text-xl cursor-pointer">
-                            This is the header
+                            Zurich
                         </span>
                     </Link>
                 </div>

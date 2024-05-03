@@ -1,11 +1,11 @@
 'use client'
 import { useEffect } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useDispatch } from 'react-redux'
-import { login, logout } from '@/redux/features/auth-slice'
+import { login } from '@/redux/features/auth-slice'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGoogle, faSignOutAlt } from '@fortawesome/free-brands-svg-icons'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 export default function LoginPage() {
     const dispatch = useDispatch()
@@ -19,15 +19,6 @@ export default function LoginPage() {
         }
     }, [session, dispatch, router])
 
-    const handleLogout = async () => {
-        try {
-            await signOut({ callbackUrl: '/login' })
-            dispatch(logout())
-        } catch (error) {
-            console.error('Failed to sign out:', error)
-        }
-    }
-
     return (
         <div className="flex flex-col items-center justify-center h-screen">
             {session.status === 'loading' && <div>Loading...</div>}{' '}
@@ -35,18 +26,6 @@ export default function LoginPage() {
             {session.status === 'error' && (
                 <div>Error: Failed to fetch session</div>
             )}{' '}
-            {/* Handle error state */}
-            {session.status == 'authenticated' && (
-                <div>
-                    <button
-                        onClick={handleLogout}
-                        className="btn btn-red rounded shadow-md"
-                    >
-                        <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
-                        Logout
-                    </button>
-                </div>
-            )}
             {session.status == 'unauthenticated' && (
                 <button
                     onClick={() => signIn('google')}
