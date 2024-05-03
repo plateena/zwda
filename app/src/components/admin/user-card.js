@@ -28,6 +28,7 @@ export default function UserCard({ user }) {
                         {masked ? maskEmail(user.email) : user.email}
                     </p>
                     <button
+                        data-testid="eye-icon"
                         onClick={() => setMasked(!masked)}
                         className="text-blue-500 hover:underline"
                     >
