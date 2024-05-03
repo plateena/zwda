@@ -17,7 +17,7 @@ export const getServerSideProps = async () => {
     }
 }
 
-const fetchAllUsers = async () => {
+export const fetchAllUsers = async () => {
     let allUsers = []
     let page = 1
 
@@ -42,6 +42,12 @@ const fetchAllUsers = async () => {
     return allUsers
 }
 
+export const filterUser = (users) => {
+    return users.filter((user) => {
+        return user.first_name.startsWith('G') || user.last_name.startsWith('W')
+    })
+}
+
 export default function Users({ allUsers }) {
     const [filteredUsers, setFilteredUsers] = useState([])
     const [filtersApplied, setFiltersApplied] = useState(true)
@@ -52,12 +58,7 @@ export default function Users({ allUsers }) {
     }, [allUsers])
 
     const applyFilters = () => {
-        const filtered = allUsers.filter((user) => {
-            return (
-                user.first_name.startsWith('G') ||
-                user.last_name.startsWith('W')
-            )
-        })
+        const filtered = filterUser(allUsers)
         setFilteredUsers(filtered)
     }
 
