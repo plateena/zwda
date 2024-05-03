@@ -10,6 +10,9 @@ export default NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
+    pages: {
+        signIn: '/login'
+    },
     callbacks: {
         async signIn({ user, account, profile }) {
             return { user, account, profile }
